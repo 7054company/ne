@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7ea Dashboard</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f6f8fa;
+      color: #1a1a1a;
+      transition: background-color 1s ease; /* Color transition for the body */
+    }
+
+    header {
+      background-color: #fff; /* White background */
+      color: #1a1a1a; /* Black text */
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    nav {
+      background-color: #fff; /* White background */
+      color: #1a1a1a; /* Black text */
+      padding: 10px;
+      text-align: center;
+      overflow-x: auto; /* Enable horizontal scrolling */
+    }
+
+    nav a {
+      color: #1a1a1a; /* Black text */
+      text-decoration: none;
+      padding: 15px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #000; /* Slightly darker text on hover */
+    }
+
+    .container {
+      margin: 20px;
+      padding: 20px;
+      background-color: #fff; /* White background */
+      border: 1px solid #ddd;
+      border-radius: 5px; /* Reduced border radius */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      color: #1a1a1a;
+    }
+
+    .widget {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 5px; /* Reduced border radius */
+      display: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-button {
+      background-color: #000; /* Black background */
+      border: none;
+      color: #fff; /* White text */
+      padding: 15px 30px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 18px;
+      margin: 15px;
+      cursor: pointer;
+      border-radius: 5px; /* Reduced border radius */
+      transition: background-color 0.3s ease; /* Color transition for the buttons */
+    }
+
+    .action-button:hover {
+      background-color: #333; /* Slightly darker background on hover */
+    }
+
+    .visible {
+      display: block;
+    }
+  </style>
+  <script>
+    function showWidget(widgetId) {
+      var widgets = document.querySelectorAll('.widget');
+      widgets.forEach(function(widget) {
+        widget.classList.remove('visible');
+      });
+
+      var selectedWidget = document.getElementById(widgetId);
+      if (selectedWidget) {
+        selectedWidget.classList.add('visible');
+      }
+    }
+
+    function showUserDetails() {
+      var userDetailsDiv = document.getElementById('userDetails');
+
+      // Get user IP address using a third-party service (you can replace it with your own method)
+      fetch('https://api64.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          var userIp = data.ip;
+
+          // Get user browser information
+          var browserInfo = navigator.userAgent;
+
+          // Display user details
+          userDetailsDiv.innerHTML = `
+            <p>User IP: ${userIp}</p>
+            <p>Browser Info: ${browserInfo}</p>
+          `;
+        })
+        .catch(error => {
+          console.error('Error fetching IP address:', error);
+          userDetailsDiv.innerHTML = 'Unable to fetch user details.';
+        });
+    }
+  </script>
+</head>
+<body>
+
+  <header>
+    <h1 style="color: #000;">7ea Dashboard</h1>
+  </header>
+
+  <nav>
+    <a onclick="showWidget('recentActivity')">Recent Activity</a>
+    <a onclick="showWidget('statistics')">Statistics</a>
+    <a onclick="showWidget('apps')">Apps</a>
+    <a onclick="showWidget('personal')">Personal</a>
+  </nav>
+
+  <div class="container">
+    <div class="widget" id="recentActivity">
+      <h2>Recent Activity</h2>
+      <p>Display recent activities and updates here.</p>
+      <button class="action-button">View Details</button>
+    </div>
+
+    <div class="widget" id="statistics">
+      <h2>Statistics</h2>
+      <p>Show key statistics and metrics.</p>
+      <button class="action-button">Generate Report</button>
+    </div>
+
+    <div class="widget" id="apps">
+      <h2>Apps</h2>
+      <p>Explore and manage your applications here.</p>
+      <button class="action-button">Open App Store</button>
+    </div>
+
+    <div class="widget" id="personal">
+      <h2>Personal</h2>
+      <p>View and manage your personal data.</p>
+      <button class="action-button" onclick="showUserDetails()">Show User Details</button>
+      <div id="userDetails" style="margin-top: 10px;"></div>
+    </div>
+
+    <!-- Add more widgets and content as needed -->
+
+  </div>
+
+</body>
+</html>
+```
